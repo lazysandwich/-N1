@@ -5,7 +5,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
+#include <ctype.h> 
 
 int main(int argv, char* argc[]) {
     if (argv < 3) {
