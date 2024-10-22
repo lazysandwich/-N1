@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-
+ 
 int is_i (char *num) {
     int acc = 0;
     int s = sizeof(num), o = 0, minus = 0, f_d = 0;
