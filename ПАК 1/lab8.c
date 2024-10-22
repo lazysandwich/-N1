@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <math.h>
 #include <stdlib.h>
-#include <string.h>
+#include <string.h> 
 #include <ctype.h>
 
 #define MAX_LINE_LENGTH 1024
