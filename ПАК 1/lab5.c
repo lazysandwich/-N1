@@ -38,27 +38,28 @@ double max_f(double a, double b) {
         return a;
 }
 
-int is_f (char *num) {
+double matof(char* num) {
     float ten = 0.1;
     float acc = 0;
-    int s = sizeof(num), o = 0, minus = 0, f_d = 0;
+    int s = sizeof(num), o = 0, minus = 1, f_d = 0;
     for (int i = 0; i < s; i++) {
         if (f_d == 0 && num[i] >= '0' && num[i] <= '9') {
             f_d = 1;
-            acc += num[i] - '0';
         }
-        else if (f_d == 0 && num[i] == '-' && minus == 0) {
-            minus = 1;
+        else if (f_d == 0 && num[i] == '-' && minus == 1) {
+            minus = -1;
+            continue;
         }
         else if (num[i] == '\0') {
             break;
         }
         else if (o == 0 && f_d == 1 && num[i] == '.') {
             o = 1; // начало дробной части
+            continue;
         }
         else if (num[i] < '0' || num[i] > '9') {
-            printf("Введено неправильное число\n");
-            return 1;
+            perror("Введено неправильное число\n");
+            exit(EXIT_FAILURE);
         }
         if (o == 0) {
             acc *= 10;
@@ -69,7 +70,7 @@ int is_f (char *num) {
             ten /= 10;
         }
     }
-    return 0;
+    return minus * acc;
 }
 
 int main(int argv, char* argc[]) {
@@ -77,10 +78,7 @@ int main(int argv, char* argc[]) {
         printf("Неверное количество аргументов\n");
         return 1;
     }
-    if (is_f(argc[1])) {
-        return 1;
-    }
-    float e = atof(argc[1]);
+    float e = matof(argc[1]);
     if (e < 0) {
         printf("Введено неправильное число\n");
         return 1;

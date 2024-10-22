@@ -40,27 +40,28 @@ double max(double a, double b) {
         return b;
 }
 
-int is_f (char *num) {
+double matof(char* num) {
     float ten = 0.1;
     float acc = 0;
-    int s = sizeof(num), o = 0, minus = 0, f_d = 0;
+    int s = sizeof(num), o = 0, minus = 1, f_d = 0;
     for (int i = 0; i < s; i++) {
         if (f_d == 0 && num[i] >= '0' && num[i] <= '9') {
             f_d = 1;
-            acc += num[i] - '0';
         }
-        else if (f_d == 0 && num[i] == '-' && minus == 0) {
-            minus = 1;
+        else if (f_d == 0 && num[i] == '-' && minus == 1) {
+            minus = -1;
+            continue;
         }
         else if (num[i] == '\0') {
             break;
         }
         else if (o == 0 && f_d == 1 && num[i] == '.') {
             o = 1; // начало дробной части
+            continue;
         }
         else if (num[i] < '0' || num[i] > '9') {
-            printf("Введено неправильное число\n");
-            return 1;
+            perror("Введено неправильное число\n");
+            exit(EXIT_FAILURE);
         }
         if (o == 0) {
             acc *= 10;
@@ -71,7 +72,7 @@ int is_f (char *num) {
             ten /= 10;
         }
     }
-    return 0;
+    return minus * acc;
 }
 
 int is_i (char *num) {
@@ -115,19 +116,7 @@ int main(int argv, char* argc[]) {
             printf("Неверное количество аргументов\n");
             return 1;
         }
-        if (is_f(argc[2])) {
-            return 1;
-        }
-        if (is_f(argc[3])) {
-            return 1;
-        }
-        if (is_f(argc[4])) {
-            return 1;
-        }
-        if (is_f(argc[5])) {
-            return 1;
-        }
-        double ep = atof(argc[2]), a = atof(argc[3]), b = atof(argc[4]), c = atof(argc[5]);
+        double ep = matof(argc[2]), a = matof(argc[3]), b = matof(argc[4]), c = matof(argc[5]);
         if (ep < 0) {
             printf("Введено неправильное число\n");
             return 1;
@@ -207,22 +196,10 @@ int main(int argv, char* argc[]) {
             printf("Неверное количество аргументов\n");
             return 1;
         }
-        if (is_f(argc[2])) {
-            return 1;
-        }
-        if (is_f(argc[2])) {
-            return 1;
-        }
-        if (is_f(argc[2])) {
-            return 1;
-        }
-        if (is_f(argc[2])) {
-            return 1;
-        }
-        double eps = atof(argc[2]);
-        double a = atof(argc[3]);
-        double b = atof(argc[4]);
-        double c = atof(argc[5]);
+        double eps = matof(argc[2]);
+        double a = matof(argc[3]);
+        double b = matof(argc[4]);
+        double c = matof(argc[5]);
         if (eps < 0) {
             printf("Введено неправильное число\n");
             return 1;
